@@ -24,7 +24,15 @@
 // locate you.
 var my_loc = new Object();
 
+var pos = {
+        lat: 0,
+        lng: 0
+      };
+
+var marker;
+
 var ws = new WebSocket("wss://volley-vr.44fs.preview.openshiftapps.com");
+
 ws.onopen = function() {    
   console.log("wss connected!")
   initMap(); 
@@ -40,34 +48,44 @@ ws.onclose = function() {
 }; 
  
 var map;
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
     zoom: 17
   });
+
+  marker = new google.maps.Marker({
+    position: pos,
+    map: map,
+    title: 'Obteniendo posición'
+});
+  marker.setMap(null);
 }
 
 function updateMap(){
-map = map, {
+  map = map, {
     center: {lat: my_loc.latitude, lng: my_loc.longitude}
 };
 
 if (my_loc != null) {
   
+  marker.setMap(null);
+
   document.title = my_loc.timestamp;
-      var pos = {
+      pos = {
         lat: my_loc.latitude,
         lng: my_loc.longitude
       };
 
-    var marker = new google.maps.Marker({
-    position: pos,
-    map: map,
-    title: 'PC'
+    marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+      title: 'PC'
     });
 
-      map.setCenter(pos);
-      handleLocationError(true);
+    map.setCenter(pos);
+    handleLocationError(true);
     }else {
     // Browser doesn't support Geolocation
     handleLocationError(false);
