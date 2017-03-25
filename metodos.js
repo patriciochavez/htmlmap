@@ -34,7 +34,8 @@
       }
       }        });
       }
-      function enviarPUT(url,json){        $.ajax({
+      function enviarPUT(url,json){        
+      $.ajax({
       url: url,
       type: 'PUT',
       dataType: 'json',
