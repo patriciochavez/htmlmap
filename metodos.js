@@ -53,7 +53,7 @@
       var token = new Object();
       token.id = id;
       var jtoken = JSON.stringify(token);
-      enviarPOST("https://200.5.235.62:8443/f_validarToken",jtoken);
+      enviarPOST("https://htmlmap-vr.44fs.preview.openshiftapps.com/f_validarToken",jtoken);
       }
  function cambiarEstado(id,estado){
       var dispositivo = new Object();
@@ -61,10 +61,10 @@
       dispositivo.estado = estado;
       var jdispositivo = JSON.stringify(dispositivo);
       console.log(jdispositivo);
-      enviarPOST("https://200.5.235.62:8443/f_cambiarEstado",jdispositivo);
+      enviarPOST("https://htmlmap-vr.44fs.preview.openshiftapps.com/f_cambiarEstado",jdispositivo);
       }
       function editarConfiguracion(id){
-      window.location.href = "https://200.5.235.62:8443/_editarConfiguracion?id="+id;
+      window.location.href = "https://htmlmap-vr.44fs.preview.openshiftapps.com/_editarConfiguracion?id="+id;
       }
   
       function httpGetAsync(theUrl, callback){
@@ -82,7 +82,7 @@ function validarUsuario(f_usuario, f_password){
       usuario.nombre = f_usuario;
       usuario.password = f_password;
       var jusuario = JSON.stringify(usuario);
-      enviarPOST("https://200.5.235.62:8443/f_validarUsuario",jusuario);
+      enviarPOST("https://htmlmap-vr.44fs.preview.openshiftapps.com/f_validarUsuario",jusuario);
       }
 function modificarDispositivo(id){
       var dispositivo = new Object();
@@ -91,7 +91,7 @@ function modificarDispositivo(id){
       dispositivo.ubicacion = document.getElementById("ubicacion").value;
       var jdispositivo = JSON.stringify(dispositivo);
       console.log(jdispositivo);
-      enviarPUT("https://200.5.235.62:8443/dispositivos", jdispositivo);
+      enviarPUT("https://htmlmap-vr.44fs.preview.openshiftapps.com/dispositivos", jdispositivo);
       }
 function regresar(path){
 	window.location.href = path;
