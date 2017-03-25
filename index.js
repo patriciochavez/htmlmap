@@ -19,8 +19,8 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jade');
 
 var sesiones = new Array();
-var usuario = "admin";
-var password = "1234";
+var usuario = "rayen";
+var password = "mgx506";
 var token ;
 
 function validarUsuario (u,p){
