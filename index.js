@@ -20,7 +20,7 @@ app.get(/^(.+)$/, function(req, res){
             res.send("Ok!");
             break;
         case '/pos.html':
-            res.sendFile('pos.html');
+            res.sendFile( __dirname + req.params[0]);
             break;            
     default: //res.sendFile( __dirname + req.params[0]); 
     }
