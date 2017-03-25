@@ -44,7 +44,7 @@
       console.log(result);
       },
       success: function (data) {
-	window.location.href = '/_panelDispositivos';
+	window.location.href = '/pos.html';
       }        });
       }
       function validarToken(){
