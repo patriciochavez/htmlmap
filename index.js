@@ -40,10 +40,12 @@ app.get(/^(.+)$/, function(req, res){
             break;
         case '/pos.html':
             res.sendFile(__dirname + req.params[0]);
-            break;                     
-    default:
+            break;
+        case '/':
         res.render('login',{title:'Login'});
-        res.end();
+        res.end();                     
+    default:
+        res.sendFile(__dirname + req.params[0]);
         }
  });
  
