@@ -19,8 +19,8 @@ app.get(/^(.+)$/, function(req, res){
         case '/test':
             res.send("Ok!");
             break;
-        case '/':
-            res.sendFile( __dirname + 'pos.html');
+        case '/pos.html':
+            res.sendFile('pos.html');
             break;            
     default: //res.sendFile( __dirname + req.params[0]); 
     }
