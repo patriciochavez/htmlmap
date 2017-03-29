@@ -2,12 +2,12 @@ var path = require('path');
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-var cookieParser = require('cookie-parser')
-
+var cookieParser = require('cookie-parser');
+var NodeTtl = require( "node-ttl" );
 var http = require('http');
 
 var location = new Object();
-
+var invitados = new NodeTtl();
 var httpServer = http.createServer(app).listen(8080);
 
 app.use(bodyParser.json());
@@ -44,6 +44,10 @@ app.get(/^(.+)$/, function(req, res){
         case '/':
         res.render('login',{title:'Login'});
         res.end();                     
+            break;
+        case '/token':
+        res.send(JSON.stringify(token_invitado));
+            break;
     default:
         res.sendFile(__dirname + req.params[0]);
         }
@@ -51,6 +55,11 @@ app.get(/^(.+)$/, function(req, res){
  
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
+     case '/token':
+        var token_invitado = Math.random().toString(36).substring(7);        
+        ttl.push('token_invitado', token_invitado, null, 40);
+        res.send(token_invitado);
+        break;
      case '/f_validarUsuario':
         token=null;
         validarUsuario(req.body.nombre, req.body.password);
