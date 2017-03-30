@@ -3,11 +3,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 var cookieParser = require('cookie-parser');
-const cache = require('nnash');
+//const cache = require('nnash');
 var http = require('http');
 
 var location = new Object();
-const invitados = new cache({ stdTTL: 100, checkperiod: 120 });
+//const invitados = new cache({ stdTTL: 100, checkperiod: 120 });
 var httpServer = http.createServer(app).listen(8080);
 
 app.use(bodyParser.json());
@@ -45,11 +45,11 @@ app.get(/^(.+)$/, function(req, res){
             res.render('login',{title:'Login'});
             res.end();                     
             break;
-        case '/token':
+/*        case '/token':
             const mykeys = invitados.keys(); 
             console.log(mykeys);
             res.send(mykeys);
-            break;
+            break;*/
     default:
         res.sendFile(__dirname + req.params[0]);
         }
@@ -57,11 +57,11 @@ app.get(/^(.+)$/, function(req, res){
  
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
-     case '/token':
+    /* case '/token':
         var token_invitado = Math.random().toString(36).substring(7);        
         const success = invitados.set('token_invitado', token_invitado);        
         res.send(token_invitado);
-        break;
+        break;*/
      case '/f_validarUsuario':
         token=null;
         validarUsuario(req.body.nombre, req.body.password);
