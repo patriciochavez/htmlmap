@@ -46,7 +46,9 @@ app.get(/^(.+)$/, function(req, res){
         res.end();                     
             break;
         case '/token':
-        res.send(JSON.stringify(invitados));
+        const mykeys = cache.keys(); 
+        console.log(mykeys);
+        res.send(mykeys);
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
@@ -57,8 +59,7 @@ app.get(/^(.+)$/, function(req, res){
     switch(req.params[0]) {
      case '/token':
         var token_invitado = Math.random().toString(36).substring(7);        
-        const success = invitados.set('token_invitado', token_invitado);
-        console.log(success);
+        const success = invitados.set('token_invitado', token_invitado);        
         res.send(token_invitado);
         break;
      case '/f_validarUsuario':
