@@ -3,7 +3,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 var cookieParser = require('cookie-parser');
-const cache = require('nnash')
+const cache = require('nnash');
 var http = require('http');
 
 var location = new Object();
