@@ -3,11 +3,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 var cookieParser = require('cookie-parser');
-var NodeTtl = require( "node-ttl" );
+const cache = require('nnash')
 var http = require('http');
 
 var location = new Object();
-var invitados = new NodeTtl();
+const invitados = new cache({ stdTTL: 100, checkperiod: 120 });
 var httpServer = http.createServer(app).listen(8080);
 
 app.use(bodyParser.json());
@@ -57,7 +57,8 @@ app.get(/^(.+)$/, function(req, res){
     switch(req.params[0]) {
      case '/token':
         var token_invitado = Math.random().toString(36).substring(7);        
-        invitados.push('token_invitado', token_invitado, null, 40);
+        const success = invitados.set('token_invitado', token_invitado);
+        console.log(success);
         res.send(token_invitado);
         break;
      case '/f_validarUsuario':
