@@ -42,13 +42,13 @@ app.get(/^(.+)$/, function(req, res){
             res.sendFile(__dirname + req.params[0]);
             break;
         case '/':
-        res.render('login',{title:'Login'});
-        res.end();                     
+            res.render('login',{title:'Login'});
+            res.end();                     
             break;
         case '/token':
-        const mykeys = invitados.keys(); 
-        console.log(mykeys);
-        res.send(mykeys);
+            const mykeys = invitados.keys(); 
+            console.log(mykeys);
+            res.send(mykeys);
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
@@ -65,8 +65,8 @@ app.get(/^(.+)$/, function(req, res){
      case '/f_validarUsuario':
         token=null;
         validarUsuario(req.body.nombre, req.body.password);
-        console.log( "login: "+ token);
-                if (token!="incorrecto"){
+        console.log( "login: " + token);
+        if (token!="incorrecto"){
             res.cookie('token', token, { expires: new Date(Date.now() + 900000) } );
             res.send({message: 'correcto', accion: 'redirect', destino:'/pos.html'});
         }else{
