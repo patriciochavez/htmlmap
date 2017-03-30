@@ -46,7 +46,7 @@ app.get(/^(.+)$/, function(req, res){
         res.end();                     
             break;
         case '/token':
-        const mykeys = cache.keys(); 
+        const mykeys = invitados.keys(); 
         console.log(mykeys);
         res.send(mykeys);
             break;
