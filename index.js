@@ -42,7 +42,9 @@ function validarUsuario (u,p){
 
 function validarToken(guest){  
     if (guest == toAuth.get(guest)){
+        console.log("guest:" + guest);
     sesiones.push(guest);
+        console.log("toAuth" + toAuth.get(guest));
     toAuth.del(guest);
     return true;
     }
@@ -62,7 +64,7 @@ app.get(/^(.+)$/, function(req, res){
             res.end();                     
             break;
         case '/token':
-        console.log(req.query);
+        console.log("token: " + req.query.guest);
             if (req.query.guest != null) {
                 if (validarToken(req.query.guest)){
                     res.cookie('token', token, { expires: new Date(Date.now() + 900000) } );
