@@ -31,6 +31,7 @@ var password = "mgx506";
 var token;
 
 function validarUsuario (u,p){
+    console.log(req.query);
     if (u==usuario && p==password || toAuth.get(req.query.guest) != null) {
         token = Math.random().toString(36).substring(7);
         sesiones.push(token);
