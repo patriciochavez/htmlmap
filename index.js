@@ -30,14 +30,19 @@ var usuario = "rayen";
 var password = "mgx506";
 var token;
 
-function validarUsuario (u,p){
-    console.log(req.query);
-    if (u==usuario && p==password || toAuth.get(req.query.guest) != null) {
+function validarUsuario (u,p){    
+    if (u==usuario && p==password) {
         token = Math.random().toString(36).substring(7);
         sesiones.push(token);
         //buscar la forma de borrar la sesion del array cuando expire    
     } else {
         token="incorrecto";
+    }
+}
+
+function validarToken(guest){  
+    if (guest == toAuth.get(guest)){
+    sesiones.push(guest);
     }
 }
 
@@ -51,6 +56,12 @@ app.get(/^(.+)$/, function(req, res){
             break;
         case '/':
             res.render('login',{title:'Login'});
+            res.end();                     
+            break;
+        case '/token':
+            if (req.query.guest != null) {
+                validarToken(req.query.guest);
+            }
             res.end();                     
             break;
     default:
