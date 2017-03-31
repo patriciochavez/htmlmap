@@ -63,7 +63,7 @@ app.get(/^(.+)$/, function(req, res){
             break;
         case '/token':        
             if (req.query.guest != null) {
-                var guest = validarToken(req.query.guest);
+                var guest = req.query.guest;
                 if (validarToken(guest)){
                     res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
                     res.redirect('/pos.html');                    
