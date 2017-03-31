@@ -65,9 +65,11 @@ app.get(/^(.+)$/, function(req, res){
             if (req.query.guest != null) {
                 if (validarToken(req.query.guest)){
                     res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
+                    res.redirect('/pos.html');                    
+                } else {
+                    res.redirect('/');                    
                 }
-            }
-            res.redirect('/');                    
+            }            
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
