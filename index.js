@@ -41,10 +41,8 @@ function validarUsuario (u,p){
 }
 
 function validarToken(guest){  
-    if (guest == toAuth.get(guest)){
-        console.log("guest:" + guest);
-    sesiones.push(guest);
-        console.log("toAuth" + toAuth.get(guest));
+    if (guest == toAuth.get(guest)){        
+    sesiones.push(guest);        
     toAuth.del(guest);
     return true;
     }
@@ -63,11 +61,10 @@ app.get(/^(.+)$/, function(req, res){
             res.render('login',{title:'Login'});
             res.end();                     
             break;
-        case '/token':
-        console.log("token: " + req.query.guest);
+        case '/token':        
             if (req.query.guest != null) {
                 if (validarToken(req.query.guest)){
-                    res.cookie('token', token, { expires: new Date(Date.now() + 900000) } );
+                    res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
                 }
             }
             res.redirect('/');                    
