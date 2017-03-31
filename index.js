@@ -44,7 +44,9 @@ function validarToken(guest){
     if (guest == toAuth.get(guest)){
     sesiones.push(guest);
     toAuth.del(guest);
+    return true;
     }
+    return false;
 }
 
 app.get(/^(.+)$/, function(req, res){ 
@@ -62,9 +64,11 @@ app.get(/^(.+)$/, function(req, res){
         case '/token':
         console.log(req.query);
             if (req.query.guest != null) {
-                validarToken(req.query.guest);
+                if (validarToken(req.query.guest)){
+                    res.cookie('token', token, { expires: new Date(Date.now() + 900000) } );
+                }
             }
-            res.end();                     
+            res.redirect('/');                    
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
