@@ -3,17 +3,24 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 var cookieParser = require('cookie-parser');
-//const cache = require('nnash');
 var http = require('http');
+var NodeTtl = require( "node-ttl" );
+var toAuth = new NodeTtl({
+        ttl: 100,
+        checkPeriode: 120});
+/*var authorized = new NodeTtl({
+        ttl: 100,
+        checkPeriode: 120});*/
 
 var location = new Object();
-//const invitados = new cache({ stdTTL: 100, checkperiod: 120 });
+
 var httpServer = http.createServer(app).listen(8080);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
         extended: true
         }));
+
 app.use(cookieParser());
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade');
@@ -21,14 +28,14 @@ app.set('view engine', 'jade');
 var sesiones = new Array();
 var usuario = "rayen";
 var password = "mgx506";
-var token ;
+var token;
 
 function validarUsuario (u,p){
-    if (u==usuario && p==password) {
+    if (u==usuario && p==password || toAuth.get(req.query.guest) != null) {
         token = Math.random().toString(36).substring(7);
         sesiones.push(token);
-        //buscar la forma de borrar la sesion del array cuando expire
-    } else{
+        //buscar la forma de borrar la sesion del array cuando expire    
+    } else {
         token="incorrecto";
     }
 }
@@ -45,11 +52,6 @@ app.get(/^(.+)$/, function(req, res){
             res.render('login',{title:'Login'});
             res.end();                     
             break;
-/*        case '/token':
-            const mykeys = invitados.keys(); 
-            console.log(mykeys);
-            res.send(mykeys);
-            break;*/
     default:
         res.sendFile(__dirname + req.params[0]);
         }
@@ -57,11 +59,11 @@ app.get(/^(.+)$/, function(req, res){
  
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
-    /* case '/token':
-        var token_invitado = Math.random().toString(36).substring(7);        
-        const success = invitados.set('token_invitado', token_invitado);        
-        res.send(token_invitado);
-        break;*/
+     case '/to_auth':
+        var token_toAuth = Math.random().toString(36).substring(7);        
+        toAuth.push(token_toAuth, token_toAuth);
+        res.send(token_toAuth);
+        break;     
      case '/f_validarUsuario':
         token=null;
         validarUsuario(req.body.nombre, req.body.password);
