@@ -59,7 +59,7 @@ app.get(/^(.+)$/, function(req, res){
  
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
-     case '/to_auth':
+     case '/toauth':
         var token_toAuth = Math.random().toString(36).substring(7);        
         toAuth.push(token_toAuth, token_toAuth);
         res.send(token_toAuth);
