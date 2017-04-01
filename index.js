@@ -40,12 +40,14 @@ function validarUsuario (u,p){
     }
 }
 
-/*function validarToken(guest){  
+function validarToken(guest){  
     if (guest == toAuth.get(guest)){        
+    sesiones.push(guest);        
+    //toAuth.del(guest);
     return true;
     }
     return false;
-}*/
+}
 
 app.get(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
@@ -63,10 +65,9 @@ app.get(/^(.+)$/, function(req, res){
             if (req.query.guest != null) {
                 var guest = req.query.guest;
                 console.log(guest);
-                if (guest == toAuth.get(guest)){
-                    sesiones.push(guest);        
-                    toAuth.del(guest);
+                if (validarToken(guest)){
                     res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
+                    toAuth.del(guest);
                     res.redirect('/pos.html');                    
                 } else {
                     res.redirect('/');                    
