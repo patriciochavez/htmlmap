@@ -84,6 +84,7 @@ app.get(/^(.+)$/, function(req, res){
         if(req.body.usuario == usuario && req.body.password == password){
         var token_toAuth = Math.random().toString(36).substring(7);        
         toAuth.push(token_toAuth, token_toAuth);
+        console.log(token_toAuth);
         res.send(token_toAuth);
         }
         break;     
