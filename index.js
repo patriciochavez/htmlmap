@@ -64,6 +64,7 @@ app.get(/^(.+)$/, function(req, res){
         case '/token':        
             if (req.query.guest != null) {
                 var guest = req.query.guest;
+                console.log(guest);
                 if (validarToken(guest)){
                     res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
                     res.redirect('/pos.html');                    
@@ -85,7 +86,6 @@ app.get(/^(.+)$/, function(req, res){
         if(android.usuario == usuario && android.password == password){
         var token_toAuth = Math.random().toString(36).substring(7);        
         toAuth.push(token_toAuth, token_toAuth);
-        console.log(token_toAuth);        
         res.send(token_toAuth);
         }
         break;     
