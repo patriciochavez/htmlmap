@@ -80,9 +80,10 @@ app.get(/^(.+)$/, function(req, res){
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
      case '/toauth':
-        console.log("toAuth request");
-        console.log(req.body);
-        if(req.body.usuario == usuario && req.body.password == password){
+        var android = new Object();
+        android = JSON.parse(req.body.json);
+        console.log(android.usuario);
+        if(android.usuario == usuario && android.password == password){
         var token_toAuth = Math.random().toString(36).substring(7);        
         toAuth.push(token_toAuth, token_toAuth);        
         res.send(token_toAuth);
