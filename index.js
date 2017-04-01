@@ -43,7 +43,7 @@ function validarUsuario (u,p){
 function validarToken(guest){  
     if (guest == toAuth.get(guest)){        
     sesiones.push(guest);        
-    toAuth.del(guest);
+    //toAuth.del(guest);
     return true;
     }
     return false;
