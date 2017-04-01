@@ -60,14 +60,13 @@ app.get(/^(.+)$/, function(req, res){
             res.render('login',{title:'Login'});
             res.end();                     
             break;
-        case '/token':        
-            if (req.query.guest != null && guest == toAuth.get(guest)) {
-                sesiones.push(guest); 
-                var guest = req.query.guest;
+        case '/token':
+            var guest = req.query.guest;        
+            if (guest == toAuth.get(guest)) {
+                sesiones.push(guest);                
                 console.log(guest);
-                if (validarToken(guest)){
-                    res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
-                    res.redirect('/pos.html');                    
+                res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
+                res.redirect('/pos.html');                    
                 } else {
                     res.redirect('/');                    
                 }
