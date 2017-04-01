@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var NodeTtl = require( "node-ttl" );
 var toAuth = new NodeTtl({
-        ttl: 100,
-        checkPeriode: 120});
+        ttl: 600,
+        checkPeriode: 620});
 /*var authorized = new NodeTtl({
         ttl: 100,
         checkPeriode: 120});*/
@@ -40,14 +40,13 @@ function validarUsuario (u,p){
     }
 }
 
-function validarToken(guest){  
+/*function validarToken(guest){  
     if (guest == toAuth.get(guest)){        
     sesiones.push(guest);        
-    //toAuth.del(guest);
     return true;
     }
     return false;
-}
+}*/
 
 app.get(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
@@ -62,12 +61,12 @@ app.get(/^(.+)$/, function(req, res){
             res.end();                     
             break;
         case '/token':        
-            if (req.query.guest != null) {
+            if (req.query.guest != null && guest == toAuth.get(guest)) {
+                sesiones.push(guest); 
                 var guest = req.query.guest;
                 console.log(guest);
                 if (validarToken(guest)){
                     res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
-                    toAuth.del(guest);
                     res.redirect('/pos.html');                    
                 } else {
                     res.redirect('/');                    
