@@ -69,8 +69,7 @@ app.get(/^(.+)$/, function(req, res){
                 res.redirect('/pos.html');                    
                 } else {
                     res.redirect('/');                    
-                }
-            }            
+                }        
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
