@@ -70,7 +70,8 @@ function initMap() {
     title: 'Obteniendo posición'
 });
   marker.setMap(null);
-  if (getLoc_enabled()){
+  getLoc_enabled();  
+  if (geo_loc){
     navigator.geolocation.getCurrentPosition(my_pos);
   }
 }
@@ -116,7 +117,7 @@ if (rcv_loc != null) {
     // Browser doesn't support Geolocation
     handleLocationError(false);
   }
-  if (getLoc_enabled()){
+  if (geo_loc){
     navigator.geolocation.getCurrentPosition(my_pos);
   }
 }
