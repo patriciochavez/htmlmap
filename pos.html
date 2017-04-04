@@ -77,10 +77,6 @@ function initMap() {
 }
 
 function my_pos(position) {
-  /*my_pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };*/
   var my_pos_Circle = new google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
@@ -88,16 +84,9 @@ function my_pos(position) {
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       map: map,
-      center: position//,
+      center: {position.coords.latitude, position.coords.longitude}//,
       //radius: Math.sqrt(citymap[city].population) * 100
-    });  
-  /*marker = new google.maps.Marker({
-      position: my_pos,
-      map: map,
-      icon: new google.maps.MarkerImage("blue"),
-      title: 'Yo'
-    });*/
-  //console.log("my_pos(): " + JSON.stringify(local_pos));
+    });    
 }
 
 function updateMap(){
