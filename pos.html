@@ -82,6 +82,7 @@ function my_pos(position) {
   };
   console.log(JSON.stringify(my_position));
   var my_pos_Circle = new google.maps.Circle({
+      map: map,
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
