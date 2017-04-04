@@ -23,8 +23,7 @@
 var geo_loc = false;
 
 function getLoc_enabled() {
-    if (navigator.geolocation) {
-        //navigator.geolocation.getCurrentPosition(showPosition);
+    if (navigator.geolocation) {        
         geo_loc = true;
     } 
 }
@@ -87,6 +86,7 @@ function my_pos(local_pos) {
       icon: pinSymbol("#FFF"),
       title: 'Yo'
     });
+  console.log("my_pos(): " + JSON.stringify(local_pos));
 }
 
 function updateMap(){
