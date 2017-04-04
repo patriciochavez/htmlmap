@@ -76,10 +76,10 @@ function initMap() {
   }
 }
 
-function my_pos(local_pos) {
+function my_pos(position) {
   my_pos = {
-        lat: local_pos.coords.latitude,
-        lng: local_pos.coords.longitude
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       };
   marker = new google.maps.Marker({
       position: my_pos,
