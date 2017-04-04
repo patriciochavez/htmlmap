@@ -84,7 +84,7 @@ function my_pos(local_pos) {
   marker = new google.maps.Marker({
       position: my_pos,
       map: map,
-      icon: pinSymbol("#FFF"),
+      icon: new google.maps.MarkerImage("blue"),
       title: 'Yo'
     });
   console.log("my_pos(): " + JSON.stringify(local_pos));
