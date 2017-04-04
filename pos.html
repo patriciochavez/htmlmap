@@ -19,12 +19,20 @@
   </head>
   <body onload="validarToken();">
     <div id="map"></div>   
-    <script>
+<script>
+var geo_loc = false;
+
+function getLoc_enabled() {
+    if (navigator.geolocation) {
+        //navigator.geolocation.getCurrentPosition(showPosition);
+        geo_loc = true;
+    } 
+}
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
-var my_loc = new Object();
+var rcv_loc = new Object();
 
 var pos = {
         lat: 0,
@@ -41,7 +49,7 @@ ws.onopen = function() {
 };
         
 ws.onmessage = function (evt) { 
-  my_loc = JSON.parse(evt.data);
+  rcv_loc = JSON.parse(evt.data);
   updateMap();
 };
         
@@ -51,7 +59,7 @@ ws.onclose = function() {
  
 var map;
 
-function initMap() {
+function initMap() {  
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
     zoom: 17
@@ -63,21 +71,37 @@ function initMap() {
     title: 'Obteniendo posición'
 });
   marker.setMap(null);
+  if (getLoc_enabled()){
+    navigator.geolocation.getCurrentPosition(my_pos);
+  }
+}
+
+function my_pos(local_pos) {
+  my_pos = {
+        lat: local_pos.coords.latitude,
+        lng: local_pos.coords.longitude
+      };
+  marker = new google.maps.Marker({
+      position: my_pos,
+      map: map,
+      icon: pinSymbol("#FFF"),
+      title: 'Yo'
+    });
 }
 
 function updateMap(){
   map = map, {
-    center: {lat: my_loc.latitude, lng: my_loc.longitude}
+    center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
 };
 
-if (my_loc != null) {
+if (rcv_loc != null) {
   
   marker.setMap(null);
 
-  document.title = my_loc.timestamp;
+  document.title = rcv_loc.timestamp;
       pos = {
-        lat: my_loc.latitude,
-        lng: my_loc.longitude
+        lat: rcv_loc.latitude,
+        lng: rcv_loc.longitude
       };
 
     marker = new google.maps.Marker({
@@ -91,6 +115,9 @@ if (my_loc != null) {
     }else {
     // Browser doesn't support Geolocation
     handleLocationError(false);
+  }
+  if (getLoc_enabled()){
+    navigator.geolocation.getCurrentPosition(my_pos);
   }
 }
 
