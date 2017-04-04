@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var NodeTtl = require( "node-ttl" );
 var toAuth = new NodeTtl({
-        ttl: 100,
-        checkPeriode: 120});
+        ttl: 600,
+        checkPeriode: 620});
 /*var authorized = new NodeTtl({
         ttl: 100,
         checkPeriode: 120});*/
@@ -40,14 +40,13 @@ function validarUsuario (u,p){
     }
 }
 
-function validarToken(guest){  
+/*function validarToken(guest){  
     if (guest == toAuth.get(guest)){        
     sesiones.push(guest);        
-    toAuth.del(guest);
     return true;
     }
     return false;
-}
+}*/
 
 app.get(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
@@ -61,16 +60,16 @@ app.get(/^(.+)$/, function(req, res){
             res.render('login',{title:'Login'});
             res.end();                     
             break;
-        case '/token':        
-            if (req.query.guest != null) {
-                var guest = req.query.guest;
-                if (validarToken(guest)){
-                    res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
-                    res.redirect('/pos.html');                    
+        case '/token':
+            var guest = req.query.guest;        
+            if (guest == toAuth.get(guest)) {
+                sesiones.push(guest);                
+                console.log(guest);
+                res.cookie('token', guest, { expires: new Date(Date.now() + 900000) } );
+                res.redirect('/pos.html');                    
                 } else {
                     res.redirect('/');                    
-                }
-            }            
+                }        
             break;
     default:
         res.sendFile(__dirname + req.params[0]);
@@ -80,9 +79,13 @@ app.get(/^(.+)$/, function(req, res){
  app.post(/^(.+)$/, function(req, res){ 
     switch(req.params[0]) {
      case '/toauth':
+        var android = new Object();
+        android = JSON.parse(req.body.json);
+        if(android.usuario == usuario && android.password == password){
         var token_toAuth = Math.random().toString(36).substring(7);        
         toAuth.push(token_toAuth, token_toAuth);
         res.send(token_toAuth);
+        }
         break;     
      case '/f_validarUsuario':
         token=null;
