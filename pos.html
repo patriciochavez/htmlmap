@@ -71,7 +71,8 @@ function initMap() {
     icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
     title: 'Obteniendo posición'
 });  
-  marker_other.setMap(null);
+
+  marker_me.setMap(null);
   getLoc_enabled();  
   if (geo_loc){
     navigator.geolocation.getCurrentPosition(my_pos);
