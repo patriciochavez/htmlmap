@@ -86,9 +86,9 @@ function initMap() {
   }
 }
 
-function updateLocalMarker(){
- marker_me.setMap(null); 
- 
+function updateLocalMarker(position){
+ marker_me.setMap(null);
+
  pos_me = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
   };
