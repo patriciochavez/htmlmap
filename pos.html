@@ -21,20 +21,10 @@
     <div id="map"></div>   
 <script>
 var geo_loc = false;
-
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
 var rcv_loc = new Object();
-
-var pos = {
-        lat: 0,
-        lng: 0
-      };
-
-var marker_other;
-var marker_me;
+var pos = { lat: 0, lng: 0 };
+var marker_other = google.maps.Marker({});
+var marker_me = google.maps.Marker({});
 
 var ws = new WebSocket("wss://volley-vr.44fs.preview.openshiftapps.com");
 
@@ -87,13 +77,13 @@ function initMap() {
 }
 
 function updateLocalMarker(position){
- marker_me.setMap(null);
+ //marker_me.setMap(null);
 
  pos_me = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
   };
 
-  marker_me = new google.maps.Marker({
+  marker_me = google.maps.Marker({
     position: pos_me,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
