@@ -86,11 +86,9 @@ function initMap() {
   }
 }
 
-function updateRemoteMarker(position){
-
-}
-
 function updateLocalMarker(){
+ marker_me.setMap(null); 
+ 
  pos_me = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
   };
@@ -122,9 +120,7 @@ function updateLocalMarker(){
   });
 }*/
 
-function updateMap(){
-
-  marker_me.setMap(null);  
+function updateMap(){ 
 
   map = map, {
     center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
