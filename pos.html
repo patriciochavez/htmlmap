@@ -22,11 +22,6 @@
 <script>
 var geo_loc = false;
 
-function getLoc_enabled() {
-    if (navigator.geolocation) {        
-        geo_loc = true;
-    } 
-}
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
@@ -50,7 +45,14 @@ ws.onopen = function() {
         
 ws.onmessage = function (evt) { 
   rcv_loc = JSON.parse(evt.data);
+  console.log(rcv_loc);
   updateMap();
+};
+
+ws.broadcast = function(data) {
+    for(var i in this.clients) {
+        this.clients[i].send(data);
+    }
 };
         
 ws.onclose = function() {               
@@ -60,46 +62,76 @@ ws.onclose = function() {
 var map;
 
 function initMap() {  
+
+  if (navigator.geolocation) {        
+        geo_loc = true;
+    } 
+
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
-    zoom: 17
+    zoom: 16
   });
 
-  marker_other = new google.maps.Marker({
+  /*marker_other = new google.maps.Marker({
     position: pos,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
     title: 'Obteniendo posición'
 });  
 
-  marker_other.setMap(null);
-  getLoc_enabled();  
+  marker_other.setMap(null);*/  
+  
   if (geo_loc){
-    navigator.geolocation.getCurrentPosition(my_pos);
+    navigator.geolocation.getCurrentPosition(updateLocalMarker);
   }
 }
 
-function my_pos(position) {
+function updateRemoteMarker(position){
+
+}
+
+function updateLocalMarker(){
+ pos_me = {  lat: position.coords.latitude,
+                  lng: position.coords.longitude 
+  };
+
+  marker_me = new google.maps.Marker({
+    position: pos_me,
+    map: map,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    title: 'Yo'
+  });
+
+  var local_pos = new Object();
+  local_pos = pos_me;
+  local_pos.user = "local";
+
+  ws.broadcast(JSON.stringify());
+}
+
+/*function my_pos(position) {
   pos_me = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
   };
+
   marker_me = new google.maps.Marker({
     position: pos_me,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
     title: 'Obteniendo posición'
   });
-}
+}*/
 
 function updateMap(){
+
+  marker_me.setMap(null);  
+
   map = map, {
     center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
-};
+  };
 
-marker_me.setMap(null);
 
-if (rcv_loc != null) {
-  
+  if (rcv_loc != null) {  
   marker_other.setMap(null);  
 
   document.title = rcv_loc.timestamp;
@@ -112,7 +144,7 @@ if (rcv_loc != null) {
       position: pos,
       map: map,
       icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-      title: 'PC'
+      title: 'remote'
     });
 
     map.setCenter(pos);
@@ -122,7 +154,7 @@ if (rcv_loc != null) {
     handleLocationError(false);
   }
   if (geo_loc){
-    navigator.geolocation.getCurrentPosition(my_pos);
+    navigator.geolocation.getCurrentPosition(updateLocalMarker);
   }
 }
 
