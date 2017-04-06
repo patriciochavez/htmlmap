@@ -39,11 +39,11 @@ ws.onmessage = function (evt) {
   updateMap();
 };
 
-ws.broadcast = function(data) {
+/*ws.broadcast = function(data) {
     for(var i in this.clients) {
         this.clients[i].send(data);
     }
-};
+};*/
         
 ws.onclose = function() {               
   console.log("wss closed!") 
@@ -69,14 +69,21 @@ function initMap() {
     title: 'host'
   });  
 
+  marker_local = new google.maps.Marker({
+    position: pos,
+    map: map,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    title: 'Yo'
+  });
+
   //marker_other.setMap(null);  
   
-  if (geo_loc){
+/*if (geo_loc){
     navigator.geolocation.getCurrentPosition(initLocalMarker);    
-  }
+  }*/
 }
 
-function initLocalMarker(position){
+/*function initLocalMarker(position){
   pos_local = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
     };
@@ -93,16 +100,16 @@ function initLocalMarker(position){
   ws_pos_local.user = "guest";
 
   ws.broadcast(JSON.stringify());
-}
+}*/
 
 function updateLocalMarker(position){
  //marker_me.setMap(null);
 
- pos_local = {  lat: position.coords.latitude,
+/* pos_local = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
   };
 
-  marker_local.setPosition(pos_local);
+  marker_local.setPosition(pos_local);*/
 
 /*  marker_local = google.maps.Marker({
     position: pos_local,
@@ -111,11 +118,11 @@ function updateLocalMarker(position){
     title: 'Yo'
   });*/
 
-  var ws_pos_local = new Object();
+  /*var ws_pos_local = new Object();
   ws_pos_local = pos_local;
   ws_pos_local.user = "guest";
 
-  ws.broadcast(JSON.stringify(ws_pos_local));
+  ws.broadcast(JSON.stringify());*/
 }
   
 function updateMap(){ 
@@ -128,6 +135,7 @@ function updateMap(){
   if (rcv_loc != null) {  
   //marker_other.setMap(null);  
 
+  if (rcv_loc.user == "guest"){
   document.title = rcv_loc.timestamp;
       pos_remote = {
         lat: rcv_loc.latitude,
@@ -144,19 +152,17 @@ function updateMap(){
     marker_remote.setPosition(pos_remote);
 
     map.setCenter(pos_remote);
-    handleLocationError(true);
-    }else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false);
-  }
-  if (geo_loc){
-    navigator.geolocation.getCurrentPosition(updateLocalMarker);
-  }
-}
+    
+  } else if (rcv_loc.user == "host"){
+  	pos_local = {  lat: rcv_loc.latitude,
+                  lng: rcv_loc.longitude 
+  };
 
-function handleLocationError(browserHasInfo, infoWindow, pos) {
-  //infoWindow.setPosition(pos);
-  console.log(browserHasInfo ? 'Recibiendo datos' : 'Esperando datos');
+  marker_local.setPosition(pos_local);
+
+  }
+ 
+	}
 }
 
     </script>
