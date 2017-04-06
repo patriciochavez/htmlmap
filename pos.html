@@ -92,7 +92,7 @@ function initLocalMarker(position){
   ws_pos_local = pos_local;
   ws_pos_local.user = "guest";
 
-  ws.broadcast(JSON.stringify());
+  ws.broadcast(JSON.stringify(ws_pos_local));
 }
 
 function updateLocalMarker(position){
