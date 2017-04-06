@@ -56,6 +56,9 @@ app.get(/^(.+)$/, function(req, res){
         case '/pos.html':
             res.sendFile(__dirname + req.params[0]);
             break;
+        case '/mon.html':
+            res.sendFile(__dirname + req.params[0]);
+            break;
         case '/':
             res.render('login',{title:'Login'});
             res.end();                     
