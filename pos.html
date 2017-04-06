@@ -66,7 +66,7 @@ function initMap() {
     position: pos,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-    title: 'Obteniendo posición remota'
+    title: 'host'
   });  
 
   //marker_other.setMap(null);  
@@ -129,19 +129,21 @@ function updateMap(){
   //marker_other.setMap(null);  
 
   document.title = rcv_loc.timestamp;
-      pos = {
+      pos_remote = {
         lat: rcv_loc.latitude,
         lng: rcv_loc.longitude
       };
 
-    marker_other = new google.maps.Marker({
+    /*marker_other = new google.maps.Marker({
       position: pos,
       map: map,
       icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
       title: rcv_loc.user
-    });
+    });*/
+    
+    marker_remote.setPosition(pos_remote);
 
-    map.setCenter(pos);
+    map.setCenter(pos_remote);
     handleLocationError(true);
     }else {
     // Browser doesn't support Geolocation
