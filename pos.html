@@ -81,7 +81,7 @@ function initLocalMarker(position){
                   lng: position.coords.longitude 
     };
 
-  marker_local = google.maps.Marker({
+  marker_local = new google.maps.Marker({
     position: pos_local,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
@@ -140,7 +140,7 @@ function updateMap(){
       icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
       title: rcv_loc.user
     });*/
-    
+
     marker_remote.setPosition(pos_remote);
 
     map.setCenter(pos_remote);
