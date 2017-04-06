@@ -23,8 +23,8 @@
 var geo_loc = false;
 var rcv_loc = new Object();
 var pos = { lat: 0, lng: 0 };
-var marker_other = new google.maps.Marker({});
-var marker_me = new google.maps.Marker({});
+var marker_remote;
+var marker_local;
 
 var ws = new WebSocket("wss://volley-vr.44fs.preview.openshiftapps.com");
 
@@ -62,37 +62,58 @@ function initMap() {
     zoom: 16
   });
 
-  /*marker_other = new google.maps.Marker({
+  marker_remote = new google.maps.Marker({
     position: pos,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-    title: 'Obteniendo posición'
-});  
+    title: 'Obteniendo posición remota'
+  });  
 
-  marker_other.setMap(null);*/  
+  //marker_other.setMap(null);  
   
   if (geo_loc){
-    navigator.geolocation.getCurrentPosition(updateLocalMarker);
+    navigator.geolocation.getCurrentPosition(initLocalMarker);    
   }
 }
 
-function updateLocalMarker(position){
- //marker_me.setMap(null);
-
- pos_me = {  lat: position.coords.latitude,
+function initLocalMarker(position){
+  pos_local = {  lat: position.coords.latitude,
                   lng: position.coords.longitude 
-  };
+    };
 
-  marker_me = google.maps.Marker({
-    position: pos_me,
+  marker_local = google.maps.Marker({
+    position: pos_local,
     map: map,
     icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
     title: 'Yo'
   });
 
-  var local_pos = new Object();
-  local_pos = pos_me;
-  local_pos.user = "local";
+  var ws_pos_local = new Object();
+  ws_pos_local = pos_local;
+  ws_pos_local.user = "guest";
+
+  ws.broadcast(JSON.stringify());
+}
+
+function updateLocalMarker(position){
+ //marker_me.setMap(null);
+
+ pos_local = {  lat: position.coords.latitude,
+                  lng: position.coords.longitude 
+  };
+
+  marker_local.setPosition(pos_local);
+
+/*  marker_local = google.maps.Marker({
+    position: pos_local,
+    map: map,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    title: 'Yo'
+  });*/
+
+  var ws_pos_local = new Object();
+  ws_pos_local = pos_local;
+  ws_pos_local.user = "guest";
 
   ws.broadcast(JSON.stringify());
 }
@@ -117,7 +138,7 @@ function updateMap(){
       position: pos,
       map: map,
       icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-      title: 'remote'
+      title: rcv_loc.user
     });
 
     map.setCenter(pos);
