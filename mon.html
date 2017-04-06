@@ -38,12 +38,6 @@ ws.onmessage = function (evt) {
   console.log(rcv_loc);
   updateMap();
 };
-
-/*ws.broadcast = function(data) {
-    for(var i in this.clients) {
-        this.clients[i].send(data);
-    }
-};*/
         
 ws.onclose = function() {               
   console.log("wss closed!") 
@@ -76,54 +70,8 @@ function initMap() {
     title: 'Yo'
   });
 
-  //marker_other.setMap(null);  
-  
-/*if (geo_loc){
-    navigator.geolocation.getCurrentPosition(initLocalMarker);    
-  }*/
 }
 
-/*function initLocalMarker(position){
-  pos_local = {  lat: position.coords.latitude,
-                  lng: position.coords.longitude 
-    };
-
-  marker_local = new google.maps.Marker({
-    position: pos_local,
-    map: map,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-    title: 'Yo'
-  });
-
-  var ws_pos_local = new Object();
-  ws_pos_local = pos_local;
-  ws_pos_local.user = "guest";
-
-  ws.broadcast(JSON.stringify());
-}*/
-
-function updateLocalMarker(position){
- //marker_me.setMap(null);
-
-/* pos_local = {  lat: position.coords.latitude,
-                  lng: position.coords.longitude 
-  };
-
-  marker_local.setPosition(pos_local);*/
-
-/*  marker_local = google.maps.Marker({
-    position: pos_local,
-    map: map,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-    title: 'Yo'
-  });*/
-
-  /*var ws_pos_local = new Object();
-  ws_pos_local = pos_local;
-  ws_pos_local.user = "guest";
-
-  ws.broadcast(JSON.stringify());*/
-}
   
 function updateMap(){ 
 
@@ -131,26 +79,17 @@ function updateMap(){
     center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
   };
 
+console.log("updateMap():" + rcv_loc);
 
   if (rcv_loc != null) {  
-  //marker_other.setMap(null);  
-
-  if (rcv_loc.user == "guest"){
-  document.title = rcv_loc.timestamp;
-      pos_remote = {
+  	if (rcv_loc.user == "guest"){
+  		document.title = rcv_loc.timestamp;
+      	pos_remote = {
         lat: rcv_loc.latitude,
         lng: rcv_loc.longitude
-      };
-
-    /*marker_other = new google.maps.Marker({
-      position: pos,
-      map: map,
-      icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-      title: rcv_loc.user
-    });*/
+      		};
 
     marker_remote.setPosition(pos_remote);
-
     map.setCenter(pos_remote);
     
   } else if (rcv_loc.user == "host"){
@@ -160,11 +99,10 @@ function updateMap(){
 
   marker_local.setPosition(pos_local);
 
-  }
+  	}
  
 	}
 }
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg4Iyt6xWt7KsapU6-pryLN3JS9pBAyfk&callback=initMap"
         async defer>
