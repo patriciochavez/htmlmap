@@ -75,33 +75,28 @@ function initMap() {
   
 function updateMap(){ 
 
-  map = map, {
-    center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
-  };
+	if (rcv_loc.user == "guest"){
+		map = map, {
+	    center: {lat: rcv_loc.latitude, lng: rcv_loc.longitude}
+  		};
 
-console.log("updateMap():" + rcv_loc);
-
-  if (rcv_loc != null) {  
-  	if (rcv_loc.user == "guest"){
-  		document.title = rcv_loc.timestamp;
-      	pos_remote = {
-        lat: rcv_loc.latitude,
-        lng: rcv_loc.longitude
-      		};
+  	  	pos_remote = {
+    	    lat: rcv_loc.latitude,
+        	lng: rcv_loc.longitude
+      			};
 
     marker_remote.setPosition(pos_remote);
     map.setCenter(pos_remote);
     
-  } else if (rcv_loc.user == "host"){
-  	pos_local = {  lat: rcv_loc.latitude,
-                  lng: rcv_loc.longitude 
-  };
+  	} else if (rcv_loc.user == "host"){
+  			document.title = rcv_loc.timestamp;
+     		pos_local = {  lat: rcv_loc.latitude,
+        		          lng: rcv_loc.longitude 
+  		};
 
-  marker_local.setPosition(pos_local);
+ 	 marker_local.setPosition(pos_local);
 
   	}
- 
-	}
 }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg4Iyt6xWt7KsapU6-pryLN3JS9pBAyfk&callback=initMap"
