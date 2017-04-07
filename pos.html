@@ -80,12 +80,12 @@ function initLocalMarker(position){
     title: 'Yo'
   });
 
-  var ws_pos_local = new Object();
+  /*var ws_pos_local = new Object();
   ws_pos_local.latitude = pos_local.latitude;
   ws_pos_local.longitude = pos_local.longitude;
   ws_pos_local.user = "guest";
 
-  ws.send(JSON.stringify(ws_pos_local));
+  ws.send(JSON.stringify(ws_pos_local));*/
 }
 
 function updateLocalMarker(position){
@@ -97,8 +97,8 @@ function updateLocalMarker(position){
   marker_local.setPosition(pos_local);
 
  var ws_pos_local = new Object();
-  ws_pos_local.latitude = pos_local.latitude;
-  ws_pos_local.longitude = pos_local.longitude;
+  ws_pos_local.latitude = position.latitude;
+  ws_pos_local.longitude = position.longitude;
   ws_pos_local.user = "guest";
 
   ws.send(JSON.stringify(ws_pos_local));
