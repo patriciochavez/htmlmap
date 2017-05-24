@@ -59,7 +59,7 @@ function initMap() {
   marker_remote = new google.maps.Marker({
     position: pos,
     map: map,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+    icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
     title: 'host'
   });  
   
@@ -76,7 +76,7 @@ function initLocalMarker(position){
   marker_local = new google.maps.Marker({
     position: pos_local,
     map: map,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
     title: 'Yo'
   });
 
@@ -101,6 +101,7 @@ function updateLocalMarker(position){
   ws_pos_local.longitude = position.longitude;
   ws_pos_local.user = "guest";
 
+  console.log(JSON.stringify(ws_pos_local));
   ws.send(JSON.stringify(ws_pos_local));
 
 }
