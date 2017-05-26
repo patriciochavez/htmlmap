@@ -97,11 +97,11 @@ function updateLocalMarker(position){
   marker_local.setPosition(pos_local);
 
  var ws_pos_local = new Object();
-  ws_pos_local.latitude = position.latitude;
-  ws_pos_local.longitude = position.longitude;
+  ws_pos_local.latitude = position.coords.latitude;
+  ws_pos_local.longitude = position.coords.longitude;
   ws_pos_local.user = "guest";
 
-  console.log(JSON.stringify(ws_pos_local));
+  //console.log(JSON.stringify(ws_pos_local));
   ws.send(JSON.stringify(ws_pos_local));
 
 }
@@ -144,31 +144,5 @@ function handleLocationError(browserHasInfo, infoWindow, pos) {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg4Iyt6xWt7KsapU6-pryLN3JS9pBAyfk&callback=initMap"
         async defer>
     </script>
-
-<p>Click the button to get your coordinates.</p>
-
-<button onclick="getLocation()">Try It</button>
-
-<p id="demo"></p>
-
-<script>
-var x = document.getElementById("demo");
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
-</script>
-
-
-    
   </body>
 </html>
